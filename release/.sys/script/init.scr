@@ -1,0 +1,5 @@
+uname -srm
+if [ ! -d /tmp/upf ]; then
+  mkdir /tmp/upf
+fi
+rm -f /tmp/upf/*

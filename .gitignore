@@ -1,0 +1,57 @@
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+*.d
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Customized
+*.pui
+tags.lst
+build/w*
+build/l*
+build/x*
+*.7z
+*.zip
+*.bak
+*.ico
+release/.sys/script/01/[a-d]*.scr
+release/.sys/upsys*
+release/.sys/*md5*
+*.lc
+*.inf
+*temp*
+release/config/*
+release/f_download/*
+release/f_upload/*
+release/update_log/*
+dpqnet_mn
+dpqnet_gui
+release/upfile/61850/*
+release/upfile/kernel/*
+release/upfile/logo/*
+release/upfile/svx/*
+release/upfile/system/*

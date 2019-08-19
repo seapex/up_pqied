@@ -1,0 +1,18 @@
+#num:name
+#length of name not over 60 char
+1:_PQNet300D
+11:Get debug information
+13:Get event_info
+14:Get cycle10
+15:_Get MAC address
+21:Put files
+922:Change equipment type
+23:Reset sysconfig
+24:_Reset 61850 LOG
+31:Stop watchdog
+32:Stop 61850
+33:_Start 61850
+40:Reboot(hard)
+41:_Reboot(soft)
+50:SetGroup4 to 1
+51:Reset key and passwd

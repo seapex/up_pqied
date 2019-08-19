@@ -1,0 +1,4 @@
+!del .sys\version.inf 
+get /home/boyuu/version.inf .sys/version.inf
+!del .sys\ver61850.inf 
+get /home/boyuu/save/boyuu61850/ver61850.inf .sys/ver61850.inf

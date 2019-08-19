@@ -1,0 +1,3 @@
+cd /boyuu/save/boyuu61850
+chmod -x scl_srvr_n
+#reboot

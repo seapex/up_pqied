@@ -1,0 +1,43 @@
+[Project ID]
+Signature=UE Proj: v.1
+[Project Information]
+Use Relative Directory=1
+Relative to Project File=1
+Include Sub Directories=1
+Project Tagfile=C:\wseapex\MySoft\pqmauxil\up_pqied\tags.lst
+Project Wordfile=
+Filter=
+Create Tagfile=0
+Project TpFile=
+[Files]
+0=License.txt
+1=CMakeLists.txt
+2=config.h.in
+3=.\0.doc\
+4=.\lua\
+5=up_pqied.h
+6=.\src\
+7=.\scan_upsys\
+[Group Filter]
+.\x86\=Makefile
+[Group]
+0=build
+1=release
+2=release - .sys
+3=release - upfile
+[Files - build]
+0=build\my_cmake
+1=build\toolchain-x86.cmake
+2=build\toolchain-lx86.cmake
+[Files - release]
+0=release\update.cfg
+1=release\upqnet.bat
+[Files - release - .sys]
+0=.\release\.sys\script\
+1=release\.sys\cst61850.lst
+2=release\.sys\vendors.lst
+3=release\.sys\force_up.lst
+[Files - release - upfile]
+0=.\release\upfile\script\
+1=release\upfile\version.inf
+2=release\upfile\wer

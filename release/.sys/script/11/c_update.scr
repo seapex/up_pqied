@@ -1,0 +1,33 @@
+uptime > /tmp/upinfo.txt
+echo "" >> /tmp/upinfo.txt
+ps ax >> /tmp/upinfo.txt
+
+echo "" >> /tmp/upinfo.txt
+echo "cat /proc/meminfo" >> /tmp/upinfo.txt
+cat /proc/meminfo >> /tmp/upinfo.txt
+echo "" >> /tmp/upinfo.txt
+
+df -h >> /tmp/upinfo.txt
+echo "" >> /tmp/upinfo.txt
+
+echo "ls -lh /boyuu" >> /tmp/upinfo.txt
+ls -lh /hmoe/boyuu >> /tmp/upinfo.txt
+cd /home/boyuu/save
+echo "" >> /tmp/upinfo.txt
+echo "ls -lh save" >> /tmp/upinfo.txt
+ls -lh >> /tmp/upinfo.txt
+cd boyuu61850
+echo "" >> /tmp/upinfo.txt
+echo "du -ah boyuu61850" >> /tmp/upinfo.txt
+du -ah >> /tmp/upinfo.txt
+cd ../data_sv
+echo "" >> /tmp/upinfo.txt
+echo "du -ah data_sv" >> /tmp/upinfo.txt
+du -ah >> /tmp/upinfo.txt
+
+echo "ls -lh /tmp" >> /tmp/upinfo.txt
+ls -lh /tmp >> /tmp/upinfo.txt
+echo "" >> /tmp/upinfo.txt
+echo "ls -lh /tmp/upf" >> /tmp/upinfo.txt
+ls -lh /tmp/upf >> /tmp/upinfo.txt
+

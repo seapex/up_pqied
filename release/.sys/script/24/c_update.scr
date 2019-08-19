@@ -1,0 +1,5 @@
+cd /boyuu/save/boyuu61850
+rm jou/*
+chmod +x scl_srvr_n
+./scl_srvr_n&
+echo Started

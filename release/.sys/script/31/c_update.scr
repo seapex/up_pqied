@@ -1,0 +1,4 @@
+cd /tmp/upf
+chmod +x cold_reset
+echo "cold_reset wtd_close"
+./cold_reset wtd_close

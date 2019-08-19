@@ -1,0 +1,12 @@
+get /tmp/upinfo.txt
+!move upinfo.txt f_download
+get /boyuu/save/rc.driver
+!move rc.driver f_download
+get /boyuu/save/pqm3.sys.conf
+!move pqm3.sys.conf f_download
+get /boyuu/save/data_sv/device.icd
+!move device.icd f_download
+get /tmp/debug.txt
+!move debug.txt f_download
+get /boyuu/save/passwd
+!move passwd f_download

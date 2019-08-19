@@ -1,0 +1,4 @@
+cd /boyuu/save/boyuu61850
+mput ../prog/*
+cd /boyuu/save/data_sv
+mput ../data/*

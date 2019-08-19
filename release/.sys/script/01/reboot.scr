@@ -1,0 +1,3 @@
+cd /tmp/upf
+chmod +x reboot.sh
+./reboot.sh
