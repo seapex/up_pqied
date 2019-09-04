@@ -2,6 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <stdint.h>
 #include "config.h"
 #include "up_pqied.h"
 #include "lua_api.h"
@@ -151,17 +152,19 @@ Parse command parameters
     Input:  argc --
             argv --
     Output: para
-    Return: <0=exception, 0=no debug, 1=debug
+    Return: <0=exception, 0=no debug, 1=debug, 100=version
 */
 int ParseOptn(InputPara *para, int argc, char* argv[])
 {
-    for (int i=0; i<argc; i++) printf("%s ", argv[i]);
-    printf("\n");
+    //for (int i=0; i<argc; i++) printf("%s ", argv[i]);
+    //printf("\n");
     
     if (argc < 2) {
         puts(help_info);
         return -1;
     }
+    if (!strcmp(argv[1], "-v")) return 100;
+    
     if (ReadParaFile(para)<0) return -2;
     if (para->type<1) {
         printf("Invalid type:%d\n", para->type);
@@ -185,13 +188,18 @@ int ParseOptn(InputPara *para, int argc, char* argv[])
 */
 int main(int argc, char* argv[])
 {
-    printf("V%d.%d.%d Copyright(C) 2019 boyuu\n", _VERSION_MAJOR, _VERSION_MINOR, _VERSION_PATCH);
+    //printf("V%d.%d.%d Copyright(C) 2019 boyuu\n", _VERSION_MAJOR, _VERSION_MINOR, _VERSION_PATCH);
     
     InputPara para;
     para.debug = ParseOptn(&para, argc, argv);
     if (para.debug<0) {
         printf("_debug_:%d@%s. para.debug=%d\n", __LINE__, __FUNCTION__, para.debug);
         return para.debug;
+    }
+    if (para.debug==100) {
+        printf("up_pqied %d.%d.%d\n", _VERSION_MAJOR, _VERSION_MINOR, _VERSION_PATCH);
+        uint32_t ver = (_VERSION_MAJOR<<22) + (_VERSION_MINOR<<10) + _VERSION_PATCH;
+        return ver;
     }
 
     printf("Update start %s\n", NowTime());
@@ -200,9 +208,10 @@ int main(int argc, char* argv[])
     ssh_api->set_port(para.port);
     ssh_api->set_debug(para.debug);
 
+    ssh_api->Run("uname -srm", 0, 1);
     char stri[128];
     sprintf(stri, "-m %sscript/init.scr", WORK_PATH);
-    ssh_api->Run(stri, 1, 1);
+    ssh_api->Run(stri, 1);
     
     int suc = 0;
     int ret, step;

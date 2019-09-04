@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- Programer manual of up_pqm -->
+<!-- Programer manual of up_pqied -->
 <manual>
     <Summary>
 		Usage: up_pqied ip [port] [dbg]
 		其他参数从配置文件读取
 		<main_flow>
-		    1. Get system information from device.
-		    2. Run .sys/script/init.scr, prepare the running environment.
+		    1. Run .sys/script/init.scr, Get system information from device & prepare the running environment.
 		    if (update program) {
-    		    3. Get version information.
-    		    4. Run preproccess.lua for update program.
+    		    2. Get version information.
+    		    3. Run preproccess.lua for update program.
 		    }
-		    5. Run the .sys/script/[a_pre.scr, b_upload.scr, c_update.scr, d_post.scr...] in sequence, if it is exists.
+		    4. Run the .sys/script/[a_pre.scr, b_upload.scr, c_update.scr, d_post.scr...] in sequence, if it is exists.
 		</main_flow>
     </Summary>
     <ConfigFile>
@@ -28,7 +27,7 @@
             kernel = 0  <!-- Whether update kernel, 0=no, 1=yes -->
             vendor = 1  <!-- vendor number. refer to vendors.lst for detail -->
         </general>
-        <type_map name=".sys/type_map.lst">
+        <type_map name=".sys/script/type_map.lst">
             #num:name
             #length of name not over 60 char
             1:PQNet300D
@@ -50,22 +49,17 @@
             5:StateGrid 国网
             ...
         </cst61850>
-		<ver61850.inf>
-			custom 	-- StateGrid | Henan
-			server	-- scl_srvr_n
-			model	-- icd, datamap.cfg
-			config	-- *.cfg
-			db		-- jou/*
-		</ver61850.inf>
     </ConfigFile>
     <VerInfoFile>
         <system name=version.inf>
             #!/bin/sh
-            IEDMODEL="PQNet300D"
-            MAINV="1.0.0"
-            GUIV="1.0.0" 
-            SYSTEMV="3.0"
-            KERNELV="1"
+            ied_model="PQNet300D"
+            pqnet_mn="0.4.0"
+            pqnet_gui="0.3.1"
+            system="1"
+            kernel="1"
+            vendor="1"
+            svx="0.0.1"
         </system>
         <s61850 name=ver61850.inf>
             #!/bin/sh
@@ -74,18 +68,10 @@
             model="1.0.17"
             config=9
             db=6
-            svx="1.0.0"
         </s61850>
    </VerInfoFile>
-    <HideSetting>
-    	升级后是否重启 -- 双击 61850 所在行最右区域。蓝色 叉号
-    	调试(只判断, 不实施) -- 双击 IP 左侧区域。
-    	更改 OEM kernel -- 双击 Kernel 的字母 n
-    </HideSetting>
 	<FAQ>
-		<Q1 desc="如何编译为运行时不弹出命令行窗口?">
-			增加 -mwindows 链接选项, 在 CMakeLists.txt 中的语句如下：
-			set (CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -mwindows")
+		<Q1 desc="xxx?">
 		</Q1>
 	</FAQ>
 </manual>	

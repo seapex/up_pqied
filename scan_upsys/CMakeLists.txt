@@ -21,6 +21,10 @@ set_property(TARGET ${EXE_TARGET} PROPERTY LINK_FLAGS -static)
 #set_property( TARGET ${EXE_TARGET} PROPERTY RUNTIME_OUTPUT_DIRECTORY
 #              ${PROJECT_BINARY_DIR}/bin )
 
+#add_custom_command(TARGET ${EXE_TARGET} POST_BUILD 
+#  COMMAND cp ${PROJECT_BINARY_DIR}/config.h ${PROJECT_SOURCE_DIR}/../up_pqgui
+#  COMMENT "Copy config.h to ../up_pqgui/" )
+
 # add the install targets
 install (TARGETS ${EXE_TARGET} DESTINATION ${PROJECT_SOURCE_DIR}/release/.sys)
 # install (FILES "${PROJECT_BINARY_DIR}/bin/.sys/preprocess.lua" DESTINATION ${PROJECT_SOURCE_DIR}/release)
