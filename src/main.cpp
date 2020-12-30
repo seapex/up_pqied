@@ -164,6 +164,7 @@ int ParseOptn(InputPara *para, int argc, char* argv[])
         return -1;
     }
     if (!strcmp(argv[1], "-v")) return 100;
+    else if (!strcmp(argv[1], "-luav")) return 101;
     
     if (ReadParaFile(para)<0) return -2;
     if (para->type<1) {
@@ -199,6 +200,15 @@ int main(int argc, char* argv[])
     if (para.debug==100) {
         printf("up_pqied %d.%d.%d\n", _VERSION_MAJOR, _VERSION_MINOR, _VERSION_PATCH);
         uint32_t ver = (_VERSION_MAJOR<<22) + (_VERSION_MINOR<<10) + _VERSION_PATCH;
+        return ver;
+    } else if (para.debug==101) {
+        int ver = -1;
+        LuaApi *lua_api = new LuaApi;
+        if(!lua_api->LoadFile(".sys/preprocess")) {
+            lua_api->Call("ThisVer", ">i", &ver);
+            printf("preprocess.lua %d.%d\n", ver/1000, ver%1000);
+        }
+        delete lua_api;
         return ver;
     }
 

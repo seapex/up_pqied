@@ -1,2 +1,1 @@
-get /boyuu/save/rc.driver
-!move rc.driver debug
+get -r /home/boyuu/save/cyc150 f_download/cyc150

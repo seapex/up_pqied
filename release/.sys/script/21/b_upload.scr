@@ -1,2 +1,2 @@
-cd /boyuu
-put -r upload save
+cd /home
+put -r f_upload boyuu

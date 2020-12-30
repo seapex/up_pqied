@@ -1,3 +1,3 @@
-get /boyuu/save/transt_sv/event_info.txt
-!move event_info.txt download
+mget /home/boyuu/save/data_sv/event_info_*.txt
+!move event_info_*.txt f_download
 

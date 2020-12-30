@@ -3,6 +3,7 @@
 <manual>
     <Summary>
 		Usage: up_pqied ip [port] [dbg]
+		       up_pqied -v | -luav
 		其他参数从配置文件读取
 		<main_flow>
 		    1. Run .sys/script/init.scr, Get system information from device & prepare the running environment.

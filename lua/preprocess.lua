@@ -1,5 +1,11 @@
 -- handle parameter config file
 
+function ThisVer() 
+    local major=1
+    local minor=1
+    return major*1000+minor
+end
+
 --[[
 Separate version string
 e.g. Input:3.7.3, return 3 7 3
@@ -75,6 +81,14 @@ Scan the file will be update
 function scan_upfile(eqpt, upcfg)
     local des_ver = get_cfginfo(".sys/version.inf", "cfg")
     local src_ver = get_cfginfo("upfile/version.inf", "cfg")
+    local svx_ver = get_cfginfo("upfile/svx/version.inf", "cfg")
+    if src_ver.svx ~= svx_ver.svx then
+        src_ver.svx = svx_ver.svx
+        io.output("upfile/version.inf")
+        io.write("#!/bin/sh\n")
+        for k,v in pairs(src_ver) do io.write(string.format("%s=%s\n", k, v)) end
+        io.close()
+    end
     -- print("des_ver:") for k,v in pairs(des_ver) do print(k,v) end
     -- print("src_ver:") for k,v in pairs(src_ver) do print(k,v) end
 
@@ -102,7 +116,7 @@ function scan_upfile(eqpt, upcfg)
     end
 
     -- print("upfile:") for k,v in pairs(upfile) do print(k,v) end
-    return upinf, src_ver
+    return upinf, des_ver
 end
 
 --[[
@@ -112,8 +126,14 @@ Scan the 61850 file will be update
 function scan_up61850(cstm)
     local des_ver = get_cfginfo(".sys/ver61850.inf", "cfg")
     -- print("des_ver:") for k,v in pairs(des_ver) do print(k, v) end
-    local src_ver = get_cfginfo(string.format("upfile/61850/%s/boyuu61850/ver61850.inf", cstm), "cfg")
+    local src_ver = get_cfginfo(string.format("upfile/61850/%s/boyuu61850/version.inf", cstm), "cfg")
+    local app_ver = get_cfginfo("upfile/61850/_app/version.inf", "cfg")
+    src_ver.server = app_ver.server
     -- print("src_ver:") for k,v in pairs(src_ver) do print(k, v) end
+    
+    io.output("upfile/61850/ver61850.inf")
+    for k,v in pairs(src_ver) do io.write(string.format("%s=%s\n", k, v)) end
+    io.close()
     
     -- Compare version
     local upinf = {}
@@ -122,7 +142,7 @@ function scan_up61850(cstm)
         else upinf[k] = 0 end
     end
     if not upinf.config then upinf.config = 1 end
-    -- for k,v in pairs(upinf) do print(k, v) end
+     for k,v in pairs(upinf) do print(k, v) end
     
     -- Adjust
     if src_ver.custom ~= des_ver.custom then
@@ -181,20 +201,28 @@ function create_upload(upf, up6, cstm, vendor)
     io.write("put .sys/check.md5\n")
     io.write("mput .sys/up_tmp/*\n")
     
+    -- svx
+    if upf.svx == 1 then
+        os.execute("upfile\\script\\create_md5.bat svx")
+        io.write("put -r upfile/svx\n")
+    end
+
     -- 61850
     if up6.custom == 2 then
+        os.execute("upfile\\script\\create_md5.bat 61850 _app scl_srvr_n")
+        io.write("put upfile/61850/_app/scl_srvr_n\n")
         os.execute(string.format("upfile\\script\\create_md5.bat 61850 %s boyuu61850/*", cstm))
         io.write(string.format("put -r upfile/61850/%s/boyuu61850\n", cstm))
         os.execute(string.format("upfile\\script\\create_md5.bat 61850 %s data_sv/*", cstm))
         io.write(string.format("put -r upfile/61850/%s/data_sv\n", cstm))
     elseif up6.custom ~= 0 or up6.server == 1 or up6.model == 1 or up6.config == 1 or up6.db == 1 then
+        if up6.server == 1 then 
+            os.execute("upfile\\script\\create_md5.bat 61850 _app scl_srvr_n")
+            io.write("put upfile/61850/_app/scl_srvr_n\n")
+        end
         io.write("mkdir boyuu61850\n")
         io.write("cd boyuu61850\n")
         -- io.write("cd /boyuu/save/boyuu61850\n")
-        if up6.server == 1 then 
-            os.execute(string.format("upfile\\script\\create_md5.bat 61850 %s boyuu61850/scl_srvr_n", cstm))
-            io.write(string.format("put upfile/61850/%s/boyuu61850/scl_srvr_n\n", cstm))
-        end
         if up6.custom == 1 or up6.config == 1 then 
             os.execute(string.format("upfile\\script\\create_md5.bat 61850 %s boyuu61850/*.cfg", cstm))
             io.write(string.format("mput upfile/61850/%s/boyuu61850/*.cfg\n", cstm))
@@ -204,7 +232,7 @@ function create_upload(upf, up6, cstm, vendor)
             os.execute(string.format("upfile\\script\\create_md5.bat 61850 %s boyuu61850/datamap.cfg", cstm))
             io.write(string.format("put upfile/61850/%s/boyuu61850/datamap.cfg\n", cstm)) 
         end
-        io.write(string.format("put upfile/61850/%s/boyuu61850/ver61850.inf\n", cstm)) 
+        io.write("put upfile/61850/ver61850.inf\n") 
         if up6.custom == 1 or up6.model == 1 then
             os.execute(string.format("upfile\\script\\create_md5.bat 61850 %s data_sv/*", cstm))
             io.write("cd ..\n")
@@ -212,12 +240,6 @@ function create_upload(upf, up6, cstm, vendor)
             io.write("cd data_sv\n")
             io.write(string.format("mput upfile/61850/%s/data_sv/*.icd\n", cstm)) 
         end
-    end
-    
-    -- svx
-    if upf.svx == 1 then
-        os.execute("upfile\\script\\create_md5.bat svx")
-        io.write("put -r upfile/svx\n")
     end
 
     io.output().close()
@@ -239,7 +261,7 @@ function create_update(upf, up6, up_cfg)
         if up6.custom ~= 0 or up6.db ~= 0 then io.write("rm /home/boyuu/save/boyuu61850/jou/*\n") end
         io.write("rm /home/boyuu/save/boyuu61850/mms*\n")
         if up6.server == 1 then
-            io.write("chmod +x /tmp/upf/boyuu61850/scl_srvr_n\n")
+            io.write("chmod +x /tmp/upf/scl_srvr_n\n")
             io.write("chmod +x /home/boyuu/save/boyuu61850/scl_srvr_n\n")
         end
     end
@@ -280,10 +302,12 @@ function preprocess(eqpt, dbg)
     -- print("up_cfg:") for k,v in pairs(up_cfg) do print(k,v) end
     local upfile, ver = scan_upfile(eqpt, up_cfg)
     -- print("ver:") for k,v in pairs(ver) do print(k,v) end
+    -- print("upfile:") for k,v in pairs(upfile) do print(k,v) end
     local vendor = get_vendor(up_cfg.vendor)
     local custm6 = get_61850custm(up_cfg.cst61850)
     -- print("vendor:", vendor, "custom61850:", custm6)
     local up61850 = scan_up61850(custm6)
+    if upfile.system==1 then upfile.sysver = ver.system end
     
     -- Force config processing
     if tonumber(up_cfg.force) == 1 then
@@ -291,10 +315,10 @@ function preprocess(eqpt, dbg)
         if bit32.extract(up_cfg.prog, frclst.App, 1) == 1 then upfile.pqnet_mn = 1 upfile.pqnet_gui = 1 end
         if bit32.extract(up_cfg.prog, frclst["61850"], 1) == 1 then up61850.custom = 2 end
         if bit32.extract(up_cfg.prog, frclst.Kernel, 1) == 1 then upfile.kernel = 1 end
-        if bit32.extract(up_cfg.prog, frclst.System, 1) == 1 then upfile.system = 1 end
+        if bit32.extract(up_cfg.prog, frclst.System, 1) == 1 then upfile.system = 1 upfile.sysver = 0 end
         if bit32.extract(up_cfg.prog, frclst.svx, 1) == 1 then upfile.svx = 1 end
     end
-    if upfile.system==1 then upfile.sysver = ver.system end
+    
 
     upfile.need = 0
     for k,v in pairs(upfile) do if v ~= 0 then upfile.need=1 break end end

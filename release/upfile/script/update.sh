@@ -20,9 +20,6 @@ if [ $2 = 1 ]; then
 fi
 
 echo "Start update, please waiting..."
-sys_mngr quit
-sleep 2
-sys_mngr wtd_close
 
 if [ -f dpqnet_mn -a -s dpqnet_mn ]; then
   chmod +x dpqnet_mn
@@ -55,10 +52,14 @@ if [ -f version.inf -a -s version.inf ]; then
 fi
 
 if [ -d boyuu61850 ]; then
-	cp -r boyuu61850 /home/boyuu/save/
+  cp -r boyuu61850 /home/boyuu/save/
 fi
 if [ -d data_sv ]; then
-	cp -r data_sv /home/boyuu/save/
+  cp -r data_sv /home/boyuu/save/
+fi
+if [ -f scl_srvr_n ]; then
+  echo "mv scl_srvr_n /home/boyuu/save/boyuu61850"
+  mv scl_srvr_n /home/boyuu/save/boyuu61850
 fi
 sleep 1
 
@@ -66,3 +67,6 @@ if [ -f uImage -a -s uImage ]; then
   echo "nandwrite -p /dev/mtd6 uImage"
   nandwrite -p /dev/mtd6 uImage
 fi
+
+sys_mngr update
+#sleep 2

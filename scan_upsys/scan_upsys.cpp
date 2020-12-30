@@ -33,7 +33,8 @@ int ParseOptn(int argc, char* argv[])
     return -2;
 }
 
-enum kUpSysFiles {kUpStartup, kUp_wer=7, kUpEnd};
+enum kUpSysFiles {kUpStartup, kUp_wer, kUp_fstab, kUp_ntpclient, kUp_sys_mngr, 
+    kUp_deamon, kUp_run_mn, kUp_run_gui, kUpEnd};
 /*!
 Save update files information
 
@@ -73,6 +74,30 @@ int SaveUpFile(const uint8_t *flags, const char *path)
                 src = "wer";
                 des = "/home/boyuu";
                 break;
+            case kUp_fstab:
+                src = "fstab";
+                des = "/etc";
+                break;
+            case kUp_ntpclient:
+                src = "ntpclient";
+                des = "/usr/sbin";
+                break;
+            case kUp_sys_mngr:
+                src = "sys_mngr";
+                des = "/usr/local/bin";
+                break;
+            case kUp_deamon:
+                src = "deamon_run.sh";
+                des = "/usr/sbin";
+                break;
+            case kUp_run_mn:
+                src = "run_mn.sh";
+                des = "/home/boyuu";
+                break;
+            case kUp_run_gui:
+                src = "run_gui.sh";
+                des = "/home/boyuu/gui";
+                break;
             default:
                 src = NULL;
                 des = NULL;
@@ -104,8 +129,15 @@ void ScanUpfile(uint8_t *flags, int ver)
     }
     switch (ver) {
         case 2:
+            flags[kUp_fstab] = 1;
         case 3:
+            flags[kUp_ntpclient] = 1;
+            flags[kUp_wer] = 1;
+            flags[kUp_deamon] = 1;
+            flags[kUp_run_mn] = 1;
+            flags[kUp_run_gui] = 1;
         case 4:
+            flags[kUp_sys_mngr] = 1;
         case 5:
         case 6:
         case 7:
