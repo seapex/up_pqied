@@ -9,4 +9,6 @@ get /tmp/debug_gui.txt
 get /home/boyuu/save/passwd
 !move passwd f_download
 mget /home/boyuu/save/*.cfg
-!move *.cfg f_download
+!move chnl_*.cfg f_download
+!move ld_*.cfg f_download
+!move phy_*.cfg f_download

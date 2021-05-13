@@ -5,14 +5,11 @@
 13:Get event_info
 14:Get cycle10
 15:_Get cycle150
-21:Put files
-922:Change equipment type
-23:Reset sysconfig
-24:_Reset 61850 LOG
-31:Stop watchdog
+24:Reset 61850 LOG
 32:Stop 61850
 33:_Start 61850
+27:_PQNet1xx\/2xxD Kit
+31:Stop watchdog
 40:Reboot(hard)
-41:_Reboot(soft)
-50:SetGroup4 to 1
-51:Reset key and passwd
+41:Reboot(soft)
+51:_Reset key and passwd

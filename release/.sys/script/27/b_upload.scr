@@ -1,0 +1,14 @@
+!tasklist | find /i "tftpd32.exe" && taskkill /im tftpd32.exe
+!start upfile\\scnet_kit\\tftpd32\tftpd32.exe
+!upfile\\script\\create_md5.bat scnet
+cd /tmp/
+put .sys/md5sum
+chmod a+x md5sum
+put .sys/check.md5
+
+cd scnet_kit
+put upfile/scnet_kit/scnet_app.bin
+put upfile/scnet_kit/scnettool
+chmod a+x scnettool
+
+

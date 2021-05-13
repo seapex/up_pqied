@@ -6,7 +6,7 @@ project (up_pqied)
 # The version number.
 set (_VERSION_MAJOR 1)
 set (_VERSION_MINOR 0)
-set (_VERSION_PATCH 7)
+set (_VERSION_PATCH 9)
 
 # configure a header file to pass some of the CMake settings to the source code
 configure_file ( "${PROJECT_SOURCE_DIR}/config.h.in"

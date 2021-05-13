@@ -1,0 +1,11 @@
+cd /tmp
+
+if [ -f check.md5 -a -s check.md5 ]; then
+	echo Check MD5 sum
+	chmod +x md5sum
+	./md5sum -c check.md5
+	if [ $? -ne 0 ]; then
+		echo "Check MD5 sum failure!" >> up_result
+		exit 1
+	fi
+fi

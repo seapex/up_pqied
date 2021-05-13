@@ -55,3 +55,6 @@ release/upfile/kernel/*
 release/upfile/logo/*
 release/upfile/svx/*
 release/upfile/system/*
+*.bin
+*.pdf
+release/upfile/update_desc*.txt

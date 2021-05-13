@@ -1,0 +1,4 @@
+cd /tmp/
+if [ ! -d scnet_kit ]; then
+  mkdir scnet_kit
+fi

@@ -1,0 +1,26 @@
+#!/bin/sh
+host=`who | awk '{print $7}'`
+
+app=/home/boyuu/tools/commu4scnet
+mac3h=b0-e0-14
+if [ $# -lt 1 ]; then
+  echo "Usage: scnettool mac_address"
+  echo "       scnettool [option] mac_address"
+  echo "          option: get set upapp"
+  exit 0
+fi
+
+if [ $# -eq 1 ]; then
+  $app -m ${mac3h}-$1
+else
+  if [ $1 = "get" ]; then
+    $app -g $2.cfg ${mac3h}-$2 
+    tftp -p -l $2.cfg $host
+  elif [ $1 = "set" ]; then
+    tftp -g -r $2.cfg $host
+    $app -s $2.cfg ${mac3h}-$2
+  elif [ $1 = "upapp" ]; then
+    $app -u scnet_app.bin ${mac3h}-$2
+  fi
+fi
+

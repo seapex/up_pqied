@@ -34,7 +34,7 @@ int ParseOptn(int argc, char* argv[])
 }
 
 enum kUpSysFiles {kUpStartup, kUp_wer, kUp_fstab, kUp_ntpclient, kUp_sys_mngr, 
-    kUp_deamon, kUp_run_mn, kUp_run_gui, kUpEnd};
+    kUp_deamon, kUp_run_mn, kUp_run_gui, kCommu4SCNet, kUpEnd};
 /*!
 Save update files information
 
@@ -98,6 +98,10 @@ int SaveUpFile(const uint8_t *flags, const char *path)
                 src = "run_gui.sh";
                 des = "/home/boyuu/gui";
                 break;
+            case kCommu4SCNet:
+                src = "commu4scnet";
+                des = "/home/boyuu/tools";
+                break;
             default:
                 src = NULL;
                 des = NULL;
@@ -139,6 +143,7 @@ void ScanUpfile(uint8_t *flags, int ver)
         case 4:
             flags[kUp_sys_mngr] = 1;
         case 5:
+            flags[kCommu4SCNet] = 1;
         case 6:
         case 7:
         case 8:

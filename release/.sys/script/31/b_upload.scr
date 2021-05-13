@@ -1,5 +1,0 @@
-cd /tmp/upf
-del *
-put upfile/script/cold_reset /tmp/upf/cold_reset
-
-

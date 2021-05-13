@@ -257,10 +257,16 @@ int main(int argc, char* argv[])
                 case 2:
                     sprintf(stri, "-m %s", filename);
                     ret = ssh_api->Run(stri, 1);
-                    if (ret) suc = -1; 
+                    printf("para.type=%d\n", para.type);
+                    if (ret) suc = -1;
                     break;
                 case 1:
                 case 3:
+                    if (i==3 && para.type==27) {
+                        //sprintf(stri, "-m %s", filename);
+                        sprintf(stri, "%s", "");
+                        ssh_api->Run(stri, 2);
+                    }
                     sprintf(stri, "-b %s", filename);
                     ret = ssh_api->FileTransfer(stri, 1);
                     if (ret) suc = -1;
@@ -284,6 +290,7 @@ int main(int argc, char* argv[])
                 remove(filename);
             }
         }
+        if (suc) break;
     }
 
     if (suc==0) {

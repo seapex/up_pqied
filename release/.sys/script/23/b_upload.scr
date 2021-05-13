@@ -1,5 +1,0 @@
-cd /tmp/upf
-put .sys/script/23/reset_syscfg.sh
-put upfile/script/md5sum
-put .sys/check.md5
-mput .sys/up_tmp/*

@@ -4,6 +4,7 @@ rem @echo %0 %1 %2 %3
 if "%1"=="app" goto app
 if "%1"=="61850" goto 61850
 if "%1"=="svx" goto svx
+if "%1"=="scnet" goto scnet
 goto end1
 
 :app
@@ -24,8 +25,15 @@ cd upfile
 cd ..
 goto end
 
+:scnet
+cd upfile
+..\.sys\md5sum.exe scnet_kit/scnet_app.bin > ..\.sys\check.md5
+..\.sys\md5sum.exe scnet_kit/scnettool >> ..\.sys\check.md5
+cd ..
+goto end
+
 :end1
 @echo usage:	%0 type [oem] [directory]
-@echo           type -- app, 61850, svx
+@echo           type -- app, 61850, svx, scnet
 
 :end

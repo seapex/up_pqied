@@ -1,3 +1,0 @@
-cd /tmp/upf
-chmod +x reset_syscfg.sh
-./reset_syscfg.sh

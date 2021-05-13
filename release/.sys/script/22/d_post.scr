@@ -1,4 +1,0 @@
-get /tmp/upinfo.txt
-!move upinfo.txt ../debug
-
-

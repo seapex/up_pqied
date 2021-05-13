@@ -40,3 +40,4 @@ Project TpFile=
 [Files - release - upfile]
 0=.\release\upfile\script\
 1=release\upfile\version.inf
+2=.\release\upfile\scnet_kit\

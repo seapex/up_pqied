@@ -1,4 +1,1 @@
-cd /tmp/upf
-chmod +x cold_reset
-echo "cold_reset"
-./cold_reset
+sys_mngr coldboot

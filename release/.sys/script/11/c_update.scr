@@ -1,6 +1,6 @@
 top -n 1 > /tmp/upinfo.txt
 echo "" >> /tmp/upinfo.txt
-ps ax >> /tmp/upinfo.txt
+ps >> /tmp/upinfo.txt
 
 echo "" >> /tmp/upinfo.txt
 echo "cat /proc/meminfo" >> /tmp/upinfo.txt
@@ -11,7 +11,7 @@ df -h >> /tmp/upinfo.txt
 echo "" >> /tmp/upinfo.txt
 
 echo "ls -lh /home/boyuu" >> /tmp/upinfo.txt
-ls -lh /hmoe/boyuu >> /tmp/upinfo.txt
+ls -lh /home/boyuu >> /tmp/upinfo.txt
 cd /home/boyuu/save
 echo "" >> /tmp/upinfo.txt
 echo "ls -lh save" >> /tmp/upinfo.txt

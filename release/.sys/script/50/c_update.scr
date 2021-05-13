@@ -1,4 +1,0 @@
-cd /tmp/upf
-chmod +x cold_reset
-echo "cold_reset setgrp_4to1"
-./cold_reset setgrp_4to1

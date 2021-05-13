@@ -12,6 +12,7 @@ class SshApi
     
     char run_cmd_[128];
     char ftp_cmd_[128];
+    char tty_cmd_[128];
     char cmd_buf_[256];
     int debug_;
   public:
