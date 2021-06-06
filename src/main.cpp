@@ -17,6 +17,7 @@ struct InputPara {
     char port[8];
     int debug;
     int reboot;
+    int pause;
 };
 
 /*!
@@ -136,11 +137,16 @@ int ReadParaFile(InputPara *para)
                     para->reboot = atoi(val); scan |= (1<<6); break;
                 }
             }
+            if (!(scan&(1<<7))) {
+                if ( !strcmp(name, "pause") ) {
+                    para->pause = atoi(val); scan |= (1<<7); break;
+                }
+            }
         } while(0);
-        if (scan==0x7f) break;
+        if (scan==0xff) break;
     }
     fclose(fp);
-    if (scan==0x7f) return 0;
+    if (scan==0xff) return 0;
     else return -2;
 }
 
@@ -212,7 +218,10 @@ int main(int argc, char* argv[])
         return ver;
     }
 
-    printf("Update start %s\n", NowTime());
+    const char *cmd_t;
+    if (para.type<=10) cmd_t = "Upgrade";
+    else cmd_t = "Operation";
+    printf("%s start %s\n", cmd_t, NowTime());
     SshApi *ssh_api = new SshApi(0);
     ssh_api->set_ip(para.ip);
     ssh_api->set_port(para.port);
@@ -257,7 +266,6 @@ int main(int argc, char* argv[])
                 case 2:
                     sprintf(stri, "-m %s", filename);
                     ret = ssh_api->Run(stri, 1);
-                    printf("para.type=%d\n", para.type);
                     if (ret) suc = -1;
                     break;
                 case 1:
@@ -294,15 +302,15 @@ int main(int argc, char* argv[])
     }
 
     if (suc==0) {
-        printf("update succeeded!\n");
+        printf("%s succeeded!\n", cmd_t);
         if (para.reboot && !para.debug) {
             sprintf(stri, "-m %sscript/%02d/reboot.scr", WORK_PATH, para.type);
             ssh_api->Run(stri, 1);
         }
-    } else if (suc==1) printf("Don't need to update!\n");
-    else printf("update failed!\n");
-    printf("Update end %s\n", NowTime());
-    if (para.debug) system("pause");
+    } else if (suc==1) printf("Don't need to upgrade!\n");
+    else printf("%s failed!\n", cmd_t);
+    printf("%s end %s\n", cmd_t, NowTime());
+    if (para.debug || para.pause) system("pause");
     if (suc != 1) system("rmdir .sys\\up_tmp /Q /S");
     return suc;
 }

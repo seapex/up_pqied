@@ -142,7 +142,7 @@ function scan_up61850(cstm)
         else upinf[k] = 0 end
     end
     if not upinf.config then upinf.config = 1 end
-     for k,v in pairs(upinf) do print(k, v) end
+    -- for k,v in pairs(upinf) do print(k, v) end
     
     -- Adjust
     if src_ver.custom ~= des_ver.custom then
