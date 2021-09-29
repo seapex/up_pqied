@@ -34,7 +34,7 @@ int ParseOptn(int argc, char* argv[])
 }
 
 enum kUpSysFiles {kUpStartup, kUp_wer, kUp_fstab, kUp_ntpclient, kUp_sys_mngr, 
-    kUp_deamon, kUp_run_mn, kUp_run_gui, kCommu4SCNet, kUpEnd};
+    kUp_deamon, kUp_run_mn, kUp_run_gui, kCommu4SCNet, kBusybox, kUpEnd};
 /*!
 Save update files information
 
@@ -102,6 +102,10 @@ int SaveUpFile(const uint8_t *flags, const char *path)
                 src = "commu4scnet";
                 des = "/home/boyuu/tools";
                 break;
+            case kBusybox:
+                src = "busybox";
+                des = "/bin";
+                break;
             default:
                 src = NULL;
                 des = NULL;
@@ -117,6 +121,7 @@ int SaveUpFile(const uint8_t *flags, const char *path)
 
     fclose(flist);
     fclose(fscrpt);
+    return 0;
 }
 
 /*!
@@ -147,8 +152,12 @@ void ScanUpfile(uint8_t *flags, int ver)
         case 6:
             flags[kUp_wer] = 1;
         case 7:
+            flags[kCommu4SCNet] = 1;
         case 8:
+            flags[kUp_sys_mngr] = 1;
         case 9:
+            flags[kCommu4SCNet] = 1;
+            flags[kBusybox] = 1;
         case 10:
         case 11:
         case 12:
@@ -170,11 +179,13 @@ void ScanUpfile(uint8_t *flags, int ver)
 
 int main(int argc, char* argv[])
 {
+    //printf("argc=%d %s %s %s\n", argc, argv[0], argv[1], argv[2]);
     int ver = ParseOptn(argc, argv);
     if (ver<0) return ver;
 
     uint8_t up_flags[kUpEnd];
     memset(up_flags, 0, sizeof(up_flags));
+
     ScanUpfile(up_flags, ver);
     
     SaveUpFile(up_flags, argv[2]);

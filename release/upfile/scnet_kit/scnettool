@@ -1,12 +1,12 @@
 #!/bin/sh
-host=`who | awk '{print $7}'`
+host=`who | awk 'NR==1 {print $7}'`
 
 app=/home/boyuu/tools/commu4scnet
 mac3h=b0-e0-14
 if [ $# -lt 1 ]; then
   echo "Usage: scnettool mac_address"
   echo "       scnettool [option] mac_address"
-  echo "          option: get set upapp"
+  echo "          option: get set upapp dbgon dbgoff"
   exit 0
 fi
 
@@ -21,6 +21,10 @@ else
     $app -s $2.cfg ${mac3h}-$2
   elif [ $1 = "upapp" ]; then
     $app -u scnet_app.bin ${mac3h}-$2
+  elif [ $1 = "dbgon" ]; then
+    $app -d 1 ${mac3h}-$2
+  elif [ $1 = "dbgoff" ]; then
+    $app -d 0 ${mac3h}-$2
   fi
 fi
 

@@ -2,7 +2,7 @@
 
 function ThisVer() 
     local major=1
-    local minor=1
+    local minor=2
     return major*1000+minor
 end
 
@@ -240,6 +240,9 @@ function create_upload(upf, up6, cstm, vendor)
             io.write("cd data_sv\n")
             io.write(string.format("mput upfile/61850/%s/data_sv/*.icd\n", cstm)) 
         end
+    end
+    if up6.need == 1 then
+        io.write("put upfile/61850/ver61850.inf\n")
     end
 
     io.output().close()

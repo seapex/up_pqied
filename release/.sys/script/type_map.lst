@@ -8,7 +8,8 @@
 24:Reset 61850 LOG
 32:Stop 61850
 33:_Start 61850
-27:_PQNet1xx\/2xxD Kit
+27:PQNet1xx\/2xxD Kit
+28:_Format SD card
 31:Stop watchdog
 40:Reboot(hard)
 41:Reboot(soft)

@@ -1,0 +1,3 @@
+cd /tmp/
+put upfile/script/mkfs4sd.sh
+chmod a+x mkfs4sd.sh

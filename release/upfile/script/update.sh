@@ -61,9 +61,15 @@ if [ -f scl_srvr_n ]; then
   echo "mv scl_srvr_n /home/boyuu/save/boyuu61850"
   mv scl_srvr_n /home/boyuu/save/boyuu61850
 fi
+if [ -f ver61850.inf -a -s ver61850.inf ]; then
+  echo "mv ver61850.inf /home/boyuu/save/boyuu61850/version.inf"
+  mv ver61850.inf /home/boyuu/save/boyuu61850/version.inf
+fi
+
 sleep 1
 
 if [ -f uImage -a -s uImage ]; then
+  flash_erase /dev/mtd6 0 0
   echo "nandwrite -p /dev/mtd6 uImage"
   nandwrite -p /dev/mtd6 uImage
 fi
