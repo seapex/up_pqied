@@ -27,7 +27,7 @@ goto end
 
 :scnet
 cd upfile
-..\.sys\md5sum.exe scnet_kit/scnet_app.bin > ..\.sys\check.md5
+..\.sys\md5sum.exe scnet_kit/scnet_*.bin > ..\.sys\check.md5
 ..\.sys\md5sum.exe scnet_kit/scnettool >> ..\.sys\check.md5
 cd ..
 goto end

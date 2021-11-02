@@ -3,11 +3,18 @@ host=`who | awk 'NR==1 {print $7}'`
 
 app=/home/boyuu/tools/commu4scnet
 mac3h=b0-e0-14
-if [ $# -lt 1 ]; then
+
+help() {
   echo "Usage: scnettool mac_address"
   echo "       scnettool [option] mac_address"
-  echo "          option: get set upapp dbgon dbgoff"
+  echo "          option: get set up upf dbgon dbgoff"
+  echo "                  upx filename"
+  echo "                  upfx filename"
   exit 0
+}
+
+if [ $# -lt 1 ]; then
+  help
 fi
 
 if [ $# -eq 1 ]; then
@@ -19,12 +26,35 @@ else
   elif [ $1 = "set" ]; then
     tftp -g -r $2.cfg $host
     $app -s $2.cfg ${mac3h}-$2
-  elif [ $1 = "upapp" ]; then
+  elif [ $1 = "up" ]; then
+    $app -d1
     $app -u scnet_app.bin ${mac3h}-$2
+    $app -d0
+  elif [ $1 = "upf" ]; then
+    $app -d1
+    $app -u scnet_app.bin ${mac3h}-$2 -f
+    $app -d0
   elif [ $1 = "dbgon" ]; then
     $app -d 1 ${mac3h}-$2
   elif [ $1 = "dbgoff" ]; then
     $app -d 0 ${mac3h}-$2
+  elif [ $1 = "upx" ]; then
+    if [ $# -lt 2 ]; then
+      help
+    fi  
+    $app -d1
+    $app -u $2 ${mac3h}-$3
+    $app -d0
+  elif [ $1 = "upfx" ]; then
+    if [ $# -lt 2 ]; then
+      help
+    fi  
+    $app -d1
+    $app -u $2 ${mac3h}-$3 -f
+    $app -d0
+  else
+    echo \"$1\" is invalid option
+    help
   fi
 fi
 

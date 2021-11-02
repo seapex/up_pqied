@@ -159,6 +159,7 @@ void ScanUpfile(uint8_t *flags, int ver)
             flags[kCommu4SCNet] = 1;
             flags[kBusybox] = 1;
         case 10:
+            flags[kCommu4SCNet] = 1;
         case 11:
         case 12:
         case 13:
