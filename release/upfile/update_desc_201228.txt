@@ -1,5 +1,0 @@
-svx程序：
-    2020.12.28 ver1.0.9.03
-    博宇的设备通过svid判断比例系数。
-    南瑞mu配置 sv_rx_NR.xml；cvt配置文件 sv_rx_cvt.xml；一路电压3路电流配置：sv_rx.xml
-    

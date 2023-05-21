@@ -84,7 +84,7 @@ void LuaApi::Call (const char *func, const char *sig, ...)
                 break;
             }
             case 's': { // string result
-                const char *s = lua_tostring(L_, nres); //由于有此项，lua_pop要由调用者来操作
+                const char *s = lua_tostring(L_, nres); //鐢变簬鏈夋椤癸紝lua_pop瑕佺敱璋冪敤鑰呮潵鎿嶄綔
                 if (s == NULL) Error("wrong result type");
                 *va_arg(vl, const char **) = s;
                 break;

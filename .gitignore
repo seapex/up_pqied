@@ -58,3 +58,4 @@ release/upfile/system/*
 *.bin
 *.pdf
 release/upfile/update_desc*.txt
+.VSCodeCounter

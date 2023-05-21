@@ -34,7 +34,7 @@ int ParseOptn(int argc, char* argv[])
 }
 
 enum kUpSysFiles {kUpStartup, kUp_wer, kUp_fstab, kUp_ntpclient, kUp_sys_mngr, 
-    kUp_deamon, kUp_run_mn, kUp_run_gui, kCommu4SCNet, kBusybox, kUpEnd};
+    kUp_deamon, kUp_run_mn, kUp_run_gui, kCommu4SCNet, kBusybox, kUp_ntpclient_sh, kUpEnd};
 /*!
 Save update files information
 
@@ -106,6 +106,10 @@ int SaveUpFile(const uint8_t *flags, const char *path)
                 src = "busybox";
                 des = "/bin";
                 break;
+            case kUp_ntpclient_sh:
+                src = "ntpclient.sh";
+                des = "/home/boyuu/ntp";
+                break;
             default:
                 src = NULL;
                 des = NULL;
@@ -161,10 +165,13 @@ void ScanUpfile(uint8_t *flags, int ver)
         case 10:
             flags[kCommu4SCNet] = 1;
         case 11:
+            flags[kUp_ntpclient_sh] = 1;
+            flags[kUp_wer] = 1;
         case 12:
         case 13:
         case 14:
         case 15:
+            flags[kCommu4SCNet] = 1;
         case 16:
         case 17:
         case 18:

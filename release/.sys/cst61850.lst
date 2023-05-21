@@ -1,9 +1,0 @@
-#num:name
-#length of name not over 60 char
-1:Fujian 福建电网
-2:Hebei 河北电网
-3:Henan 河南电网
-4:Shanxi 山西电网
-5:StateGrid 国网
-6:JiangSu 江苏
-7:JiangSuDC 江苏直流

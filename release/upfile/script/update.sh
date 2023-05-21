@@ -37,6 +37,7 @@ if [ -f upsys.sh -a -s upsys.sh ]; then
 fi
 if [ -d svx ]; then
     chmod +x svx/sv_rx_armlinux
+    chmod +x svx/sv_rx_9-2
     echo "mv svx/* /home/boyuu/svx"
 	mv svx/* /home/boyuu/svx
 fi

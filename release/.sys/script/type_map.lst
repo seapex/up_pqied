@@ -12,5 +12,7 @@
 28:_Format SD card
 31:Stop watchdog
 40:Reboot(hard)
-41:Reboot(soft)
-51:_Reset key and passwd
+41:_Reboot(soft)
+70:Debug/Reset key and passwd
+71:Debug/Login
+72:Debug/Put files

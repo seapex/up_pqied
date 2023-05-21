@@ -40,7 +40,7 @@
             15:_Get MAC address
             ...
         </type_map>
-        <cst61850 name=".sys/cst61850.lst">
+        <cst61850 name="upfile/61850/cst61850.lst">
             #num:name
             #length of name not over 60 char
             1:Fujian 福建电网

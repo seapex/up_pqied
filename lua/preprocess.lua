@@ -2,7 +2,7 @@
 
 function ThisVer() 
     local major=1
-    local minor=2
+    local minor=3
     return major*1000+minor
 end
 
@@ -280,7 +280,8 @@ end
     Return: 61580 customer in string. e.g. "StateGrid", "Henan"
 --]]
 function get_61850custm(n)
-    local custms = get_cfginfo(".sys/cst61850.lst", "ary")
+    -- local custms = get_cfginfo(".sys/cst61850.lst", "ary")
+    local custms = get_cfginfo("upfile/61850/cst61850.lst", "ary")
     -- print("custms:") for k,v in pairs(custms) do print(k,v) end
     return custms[tonumber(n)]
 end

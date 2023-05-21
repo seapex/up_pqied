@@ -278,7 +278,7 @@ int main(int argc, char* argv[])
                     sprintf(stri, "-b %s", filename);
                     ret = ssh_api->FileTransfer(stri, 1);
                     if (ret) suc = -1;
-                    if (i==1 && para.type==28) {
+                    if (i==1 && (para.type==28 || para.type==71)) {
                         ssh_api->Run("", 2);
                     }
                     break;
