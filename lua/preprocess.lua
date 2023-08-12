@@ -2,7 +2,7 @@
 
 function ThisVer() 
     local major=1
-    local minor=3
+    local minor=4
     return major*1000+minor
 end
 
@@ -188,13 +188,14 @@ function create_upload(upf, up6, cstm, vendor)
         os.execute(string.format("copy upfile\\logo\\logo_%s.bmp .sys\\up_tmp\\logo.bmp > nul", vendor));
     end
     if upf.system ~= 0 then
-        -- print(string.format(".sys\\scan_upsys.exe %d .sys", upf.sysver))
+        if upf.sysver == nil then upf.sysver = 0 end
+         print(string.format(".sys\\scan_upsys.exe %d .sys", upf.sysver))
         os.execute(string.format(".sys\\scan_upsys.exe %d .sys", upf.sysver))
         local upsys = get_cfginfo(".sys/upsys_files.lst", "ary")
         for k,v in pairs(upsys) do os.execute(string.format("copy upfile\\system\\%s .sys\\up_tmp > nul", v)) end
         os.execute("copy .sys\\upsys.sh .sys\\up_tmp > nul")
     end
-    
+    print("197")
     os.execute("upfile\\script\\create_md5.bat app")
     io.write("cd /tmp/upf\n")
     io.write("put .sys/md5sum\n")
@@ -328,7 +329,7 @@ function preprocess(eqpt, dbg)
     for k,v in pairs(upfile) do if v ~= 0 then upfile.need=1 break end end
     up61850.need = 0
     for k,v in pairs(up61850) do if v ~= 0 then up61850.need=1 break end end
-    -- print("upfile:") for k,v in pairs(upfile) do print(k,v) end
+    print("upfile:") for k,v in pairs(upfile) do print(k,v) end
     -- print("up61850:") for k,v in pairs(up61850) do print(k,v) end
     if upfile.need == 1 or up61850.need == 1 then
         create_upload(upfile, up61850, custm6, vendor)

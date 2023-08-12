@@ -1,5 +1,10 @@
 Todo:
 
++--------- V1.3.1 --------------------+
+2023-7-14
+1. 修改 preprocess.lua/create_upload(), 解决 upf.sysver==nil 时出错的问题. 
+   preprocess.lua>>V1.4
+
 +--------- V1.3.0 --------------------+
 2022-3-28
 1. 修改 preprocess.lua/get_61850custm(n), cst61850.lst 所在路径由 .sys 改为 upfile/61850
