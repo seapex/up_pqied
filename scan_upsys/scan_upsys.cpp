@@ -149,26 +149,17 @@ void ScanUpfile(uint8_t *flags, int ver)
         case 2:
             flags[kUp_fstab] = 1;
         case 3:
-            flags[kUp_ntpclient] = 1;
-            flags[kUp_wer] = 1;
             flags[kUp_deamon] = 1;
             flags[kUp_run_mn] = 1;
             flags[kUp_run_gui] = 1;
         case 4:
-            flags[kUp_sys_mngr] = 1;
         case 5:
-            flags[kCommu4SCNet] = 1;
         case 6:
-            flags[kUp_wer] = 1;
         case 7:
-            flags[kCommu4SCNet] = 1;
         case 8:
-            flags[kUp_sys_mngr] = 1;
         case 9:
-            flags[kCommu4SCNet] = 1;
             flags[kBusybox] = 1;
         case 10:
-            flags[kCommu4SCNet] = 1;
         case 11:
             flags[kUp_ntpclient_sh] = 1;
             flags[kUp_wer] = 1;
@@ -178,11 +169,11 @@ void ScanUpfile(uint8_t *flags, int ver)
         case 15:
             flags[kCommu4SCNet] = 1;
         case 16:
-            flags[kUp_ne_ftps_sh] = 1;
         case 17:
-            flags[kUp_sys_mngr] = 1;
         case 18:
+            flags[kUp_ne_ftps_sh] = 1;
         case 19:
+            flags[kUp_sys_mngr] = 1;
         case 20:
         case 21:
         case 22:

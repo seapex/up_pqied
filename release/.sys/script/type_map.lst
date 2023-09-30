@@ -1,5 +1,7 @@
-#num:name
-#length of name not over 60 char
+# num:name
+# length of name not over 60 char
+# total number of items not over 32
+# >100 hide menu
 1:_PQNet300D
 11:Get debug information
 13:Get event_info
@@ -16,3 +18,5 @@
 70:Debug/Reset key and passwd
 71:Debug/Login
 72:Debug/Put files
+73:Debug/Get 7x24 recording
+
