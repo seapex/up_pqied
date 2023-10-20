@@ -1,0 +1,5 @@
+echo start clear 7x24
+for i in {1..4}; do
+    rm /home/boyuu/save/wrec/LD$i/* -rf
+done
+echo end clear 7x24
