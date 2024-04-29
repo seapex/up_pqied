@@ -2,7 +2,7 @@
 
 function ThisVer() 
     local major=1
-    local minor=4
+    local minor=8
     return major*1000+minor
 end
 
@@ -61,7 +61,8 @@ function get_cfginfo(fname, ftype)
             end
         elseif ftype=="ary" then
             for k, v in buf:gmatch("%s-(%d+)%s*:%s*[\"\']-([^\'\"%c%s]+)[\"\']-") do
-                tmp_tbl[#tmp_tbl+1] = v
+                --tmp_tbl[#tmp_tbl+1] = v
+                tmp_tbl[tonumber(k)] = v
             end
         elseif ftype=="sys" then
             tmp_tbl.size = buf:match("/dev/mtdblock/5%s-(%d+)")
@@ -166,7 +167,7 @@ Create b_upload.scr file
 	        cstm -- custom of 61850
 	        vendor -- 
 --]]
-function create_upload(upf, up6, cstm, vendor)
+function create_upload(upf, up6, cstm, vendor, lang)
     io.output(".sys/script/01/b_upload.scr")
 
     -- system & application
@@ -179,7 +180,8 @@ function create_upload(upf, up6, cstm, vendor)
         os.execute("copy upfile\\dpqnet_mn .sys\\up_tmp > nul")
     end
     if upf.pqnet_gui == 1 then
-        os.execute("copy upfile\\dpqnet_gui .sys\\up_tmp > nul")
+        os.execute("copy upfile\\dpqnet_gui_ .sys\\up_tmp > nul")
+        os.execute(string.format("copy upfile\\gui\\dpqnet_gui_%s .sys\\up_tmp\\dpqnet_gui > nul", lang));
     end
     if upf.kernel == 1 then
         os.execute("copy upfile\\kernel\\uImage .sys\\up_tmp > nul")
@@ -209,6 +211,9 @@ function create_upload(upf, up6, cstm, vendor)
     end
 
     -- 61850
+    if up6.need == 1 then
+        io.write("put upfile/61850/ver61850.inf\n")
+    end
     if up6.custom == 2 then
         os.execute("upfile\\script\\create_md5.bat 61850 _app scl_srvr_n")
         io.write("put upfile/61850/_app/scl_srvr_n\n")
@@ -233,7 +238,6 @@ function create_upload(upf, up6, cstm, vendor)
             os.execute(string.format("upfile\\script\\create_md5.bat 61850 %s boyuu61850/datamap.cfg", cstm))
             io.write(string.format("put upfile/61850/%s/boyuu61850/datamap.cfg\n", cstm)) 
         end
-        io.write("put upfile/61850/ver61850.inf\n") 
         if up6.custom == 1 or up6.model == 1 then
             os.execute(string.format("upfile\\script\\create_md5.bat 61850 %s data_sv/*", cstm))
             io.write("cd ..\n")
@@ -241,9 +245,6 @@ function create_upload(upf, up6, cstm, vendor)
             io.write("cd data_sv\n")
             io.write(string.format("mput upfile/61850/%s/data_sv/*.icd\n", cstm)) 
         end
-    end
-    if up6.need == 1 then
-        io.write("put upfile/61850/ver61850.inf\n")
     end
 
     io.output().close()
@@ -288,6 +289,26 @@ function get_61850custm(n)
 end
 
 --[[
+    Input:  idx -- language index. 1, 2, ... 0=no change
+    Return: language abbreviation in string. e.g. "cn", "en"
+--]]
+function get_lang(idx)
+    idx = tonumber(idx)
+    -- print("type(idx):", type(idx))
+    local tb = get_cfginfo(".sys/gui_lang", "cfg")
+    local up = 0
+    if idx == 0 then
+        idx = tonumber(tb.lang)
+    elseif (idx ~= tonumber(tb.lang)) then
+        up = 1
+    end
+    if idx == nil or idx == 0 then idx = 1 end
+    local langs = get_cfginfo("upfile/gui/lang.lst", "ary")
+    -- for i, v in pairs(langs) do print(i, v) end
+    return langs[idx], up
+end
+
+--[[
     Input:  n -- vendor number. 1, 2, ...
     Return: vendor name in string. e.g. "boyuu", "hoshing"
 --]]
@@ -313,17 +334,19 @@ function preprocess(eqpt, dbg)
     -- print("vendor:", vendor, "custom61850:", custm6)
     local up61850 = scan_up61850(custm6)
     if upfile.system==1 then upfile.sysver = ver.system end
-    
+    local lang, up = get_lang(up_cfg.lang)
+    if up == 1 then upfile.pqnet_gui = 1 end
+
     -- Force config processing
     if tonumber(up_cfg.force) == 1 then
         local frclst = get_cfginfo(".sys/force_up.lst", "lst")
         if bit32.extract(up_cfg.prog, frclst.App, 1) == 1 then upfile.pqnet_mn = 1 upfile.pqnet_gui = 1 end
         if bit32.extract(up_cfg.prog, frclst["61850"], 1) == 1 then up61850.custom = 2 end
-        if bit32.extract(up_cfg.prog, frclst.Kernel, 1) == 1 then upfile.kernel = 1 end
-        if bit32.extract(up_cfg.prog, frclst.System, 1) == 1 then upfile.system = 1 upfile.sysver = 0 end
         if bit32.extract(up_cfg.prog, frclst.svx, 1) == 1 then upfile.svx = 1 end
+        if bit32.extract(up_cfg.prog, frclst.System, 1) == 1 then upfile.system = 1 upfile.sysver = 0 end
+        if bit32.extract(up_cfg.prog, frclst.Vendor, 1) == 1 then upfile.vendor = 1 end
+        if bit32.extract(up_cfg.prog, frclst.Kernel, 1) == 1 then upfile.kernel = 1 end
     end
-    
 
     upfile.need = 0
     for k,v in pairs(upfile) do if v ~= 0 then upfile.need=1 break end end
@@ -332,7 +355,7 @@ function preprocess(eqpt, dbg)
     print("upfile:") for k,v in pairs(upfile) do print(k,v) end
     -- print("up61850:") for k,v in pairs(up61850) do print(k,v) end
     if upfile.need == 1 or up61850.need == 1 then
-        create_upload(upfile, up61850, custm6, vendor)
+        create_upload(upfile, up61850, custm6, vendor, lang)
         create_update(upfile, up61850, up_cfg)
         return 0
     else

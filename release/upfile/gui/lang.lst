@@ -1,6 +1,5 @@
 #num:name
 #length of name not over 60 char
-1:boyuu
-2:hoshing
-3:cyg
-4:general
+0:No Change
+1:cn 中文
+2:en English

@@ -171,10 +171,10 @@ void ScanUpfile(uint8_t *flags, int ver)
         case 16:
         case 17:
         case 18:
-            flags[kUp_ne_ftps_sh] = 1;
         case 19:
             flags[kUp_sys_mngr] = 1;
         case 20:
+            flags[kUp_ne_ftps_sh] = 1;
         case 21:
         case 22:
         case 23:

@@ -1,10 +1,24 @@
 Todo:
 
+2024-4-29
+1. 修改 preprocess.lua/get_lang(), 优化GUI显示语言处理策略.
+   preprocess>>V1.8
+2024-4-17
+1. 修改 preprocess.lua/create_upload() get_lang(), 升级 GUI 程序时根据语言确定上传哪个gui 程序.
+   preprocess>>V1.7
+2024-4-11
+1. 修改 preprocess.lua/preprocess(), 解决 无法更新启动界面的问题. 
+   preprocess.lua>>V1.6
+
++--------- V1.3.2 --------------------+
+2023-7-14
+1. 修改 preprocess.lua/create_upload(), 解决 ver61850.inf 重复上传的问题. 
+   preprocess.lua>>V1.5
+2. 修改 getver.scr update.sh, 解决 61850 升级时，不能正确识别和更新版本信息的问题. 
 +--------- V1.3.1 --------------------+
 2023-7-14
 1. 修改 preprocess.lua/create_upload(), 解决 upf.sysver==nil 时出错的问题. 
    preprocess.lua>>V1.4
-
 +--------- V1.3.0 --------------------+
 2022-3-28
 1. 修改 preprocess.lua/get_61850custm(n), cst61850.lst 所在路径由 .sys 改为 upfile/61850

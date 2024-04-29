@@ -15,7 +15,7 @@ if (update program) {
     3. Run the preproccess.lua for update program.
 }
 ```
-4. Run the .sys/script/[a_pre.scr, b_upload.scr, c_update.scr, d_post.scr...] in sequence, if it is xists.
+4. Run the .sys/script/[a_pre.scr, b_upload.scr, c_update.scr, d_post.scr...] in sequence, if it is exists.
 
 ## ConfigFile
 ### general update.cfg
@@ -64,7 +64,6 @@ vendor = 1  # vendor number. refer to vendors.lst for detail
 ## VerInfoFile
 ### system version.inf
 ```bash
-#!/bin/sh
 ied_model="PQNet300D"
 pqnet_mn="0.4.0"
 pqnet_gui="0.3.1"
@@ -76,7 +75,6 @@ svx="0.0.1"
 
 ### s61850 ver61850.inf
 ```bash
-#!/bin/sh
 custom=Fujian
 server="2.0.19"
 model="1.0.17"

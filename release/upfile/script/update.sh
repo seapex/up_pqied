@@ -63,8 +63,8 @@ if [ -f scl_srvr_n ]; then
   mv scl_srvr_n /home/boyuu/save/boyuu61850
 fi
 if [ -f ver61850.inf -a -s ver61850.inf ]; then
-  echo "mv ver61850.inf /home/boyuu/save/boyuu61850/version.inf"
-  mv ver61850.inf /home/boyuu/save/boyuu61850/version.inf
+  echo "mv ver61850.inf /home/boyuu/save/boyuu61850/"
+  mv ver61850.inf /home/boyuu/save/boyuu61850/
 fi
 
 sleep 1

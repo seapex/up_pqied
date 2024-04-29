@@ -158,7 +158,7 @@ Parse command parameters
     Input:  argc --
             argv --
     Output: para
-    Return: <0=exception, 0=no debug, 1=debug, 100=version
+    Return: <0=exception, 0=no debug, 1=debug, 100=version, 101=preprocess.lua version
 */
 int ParseOptn(InputPara *para, int argc, char* argv[])
 {
