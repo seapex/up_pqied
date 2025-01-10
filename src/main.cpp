@@ -314,7 +314,7 @@ int main(int argc, char* argv[])
     else printf("%s failed!\n", cmd_t);
     printf("%s end %s\n", cmd_t, NowTime());
     if (para.debug || para.pause) system("pause");
-    if (suc != 1) system("rmdir .sys\\up_tmp /Q /S");
+    if (suc != 1) system(".sys\\rm_up_tmp.bat");
     return suc;
 }
 

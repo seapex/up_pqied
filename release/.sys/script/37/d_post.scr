@@ -1,0 +1,2 @@
+get /tmp/ipv6.txt
+!move ipv6.txt f_download

@@ -191,7 +191,7 @@ function create_upload(upf, up6, cstm, vendor, lang)
     end
     if upf.system ~= 0 then
         if upf.sysver == nil then upf.sysver = 0 end
-         print(string.format(".sys\\scan_upsys.exe %d .sys", upf.sysver))
+        print(string.format(".sys\\scan_upsys.exe %d .sys", upf.sysver))
         os.execute(string.format(".sys\\scan_upsys.exe %d .sys", upf.sysver))
         local upsys = get_cfginfo(".sys/upsys_files.lst", "ary")
         for k,v in pairs(upsys) do os.execute(string.format("copy upfile\\system\\%s .sys\\up_tmp > nul", v)) end

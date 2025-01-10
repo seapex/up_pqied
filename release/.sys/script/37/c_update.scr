@@ -1,0 +1,2 @@
+ip -6 addr show dev eth0|grep inet6|awk '{print $2}' > /tmp/ipv6.txt
+awk '/#ipv6/ {print "NTP:" $2}' /etc/ntp.conf >> /tmp/ipv6.txt

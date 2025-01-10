@@ -35,7 +35,7 @@ int ParseOptn(int argc, char* argv[])
 
 enum kUpSysFiles {kUpStartup, kUp_wer, kUp_fstab, kUp_ntpclient, kUp_sys_mngr, 
     kUp_deamon, kUp_run_mn, kUp_run_gui, kCommu4SCNet, kBusybox, kUp_ntpclient_sh, 
-    kUp_ne_ftps_sh, kUpEnd};
+    kUp_ne_ftps_sh, kUp_sys4_23, kUpEnd};
 /*!
 Save update files information
 
@@ -64,6 +64,7 @@ int SaveUpFile(const uint8_t *flags, const char *path)
     fprintf(fscrpt, "echo $0 run...\n");
 
     const char *src, *des;
+    int m = 0;
     for (int i=0; i<kUpEnd; i++) {
         if (!flags[i]) continue;
         switch (i) {
@@ -115,6 +116,18 @@ int SaveUpFile(const uint8_t *flags, const char *path)
                 src = "ne_ftps.sh";
                 des = "/home/boyuu/tools";
                 break;
+            case kUp_sys4_23:
+                src = "upsys4_23.sh";
+                fprintf(fscrpt, "chmod +x %s\n", src);
+                fprintf(fscrpt, "./%s\n", src);
+                fprintf(flist, "%d:%s\n", m++, src);
+
+                fprintf(flist, "%d:%s\n", m++, "start_ntpd.sh");
+                fprintf(flist, "%d:%s\n", m++, "meas_frq_err.sh");
+                fprintf(flist, "%d:%s\n", m++, "ntp_ipv4.lua");
+                fprintf(flist, "%d:%s\n", m++, "ntp.conf");
+                fprintf(flist, "%d:%s\n", m++, "lua");
+                fprintf(flist, "%d:%s\n", m++, "set_ipv6.lua");
             default:
                 src = NULL;
                 des = NULL;
@@ -124,7 +137,7 @@ int SaveUpFile(const uint8_t *flags, const char *path)
             fprintf(fscrpt, "chmod +x %s\n", src);
             fprintf(fscrpt, "echo mv %s %s\n", src, des);
             fprintf(fscrpt, "mv %s %s\n", src, des);
-            fprintf(flist, "%d:%s\n", i, src);
+            fprintf(flist, "%d:%s\n", m++, src);
         }
     }
 
@@ -161,13 +174,11 @@ void ScanUpfile(uint8_t *flags, int ver)
             flags[kBusybox] = 1;
         case 10:
         case 11:
-            flags[kUp_ntpclient_sh] = 1;
             flags[kUp_wer] = 1;
         case 12:
         case 13:
         case 14:
         case 15:
-            flags[kCommu4SCNet] = 1;
         case 16:
         case 17:
         case 18:
@@ -177,6 +188,9 @@ void ScanUpfile(uint8_t *flags, int ver)
             flags[kUp_ne_ftps_sh] = 1;
         case 21:
         case 22:
+            flags[kUp_sys4_23] = 1;
+            flags[kUpStartup] = 1;
+            flags[kCommu4SCNet] = 1;
         case 23:
         default:
             break;

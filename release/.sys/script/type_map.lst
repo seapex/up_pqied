@@ -7,16 +7,17 @@
 13:Get event_info
 14:Get cycle10
 15:_Get cycle150
-24:Reset 61850 LOG
-32:Stop 61850
-33:_Start 61850
+21:Reset 61850 LOG
+22:Stop 61850
+23:_Start 61850
 27:PQNet1xx\/2xxD Kit
 28:_Format SD card
-31:Stop watchdog
+36:Set IPv6
+37:IPv6 address
+39:Stop watchdog
 40:Reboot(hard)
 41:_Reboot(soft)
 70:Debug/Reset key and passwd
 71:Debug/Login
 72:Debug/Put files
 73:Debug/Clear 7x24 recording
-

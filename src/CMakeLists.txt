@@ -22,6 +22,7 @@ set_property(TARGET ${EXE_TARGET} PROPERTY COMPILE_FLAGS -O2)
 # Set the GCC Additional flags to use when linking this target
 # -shared-libgcc -static-libstdc++ -static-libgcc ...
 set_property(TARGET ${EXE_TARGET} PROPERTY LINK_FLAGS -static)
+#set_property(TARGET ${EXE_TARGET} PROPERTY LINK_FLAGS -shared-libgcc)
 #set_target_properties(${EXE_TARGET} PROPERTIES LINK_FLAGS -static-libgcc LINK_FLAGS -static-libstdc++)
 
 # specifies the directory into which runtime target files should be built

@@ -1,5 +1,7 @@
 Todo:
 
+2024-8-1
+1. 修改 ntpclient.sh, 去掉 ntpclient 的 -l 选项，解决开关机后系统时间跳变的问题.
 2024-4-29
 1. 修改 preprocess.lua/get_lang(), 优化GUI显示语言处理策略.
    preprocess>>V1.8
