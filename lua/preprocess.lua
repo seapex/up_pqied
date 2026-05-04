@@ -2,7 +2,7 @@
 
 function ThisVer() 
     local major=1
-    local minor=8
+    local minor=10
     return major*1000+minor
 end
 
@@ -197,7 +197,6 @@ function create_upload(upf, up6, cstm, vendor, lang)
         for k,v in pairs(upsys) do os.execute(string.format("copy upfile\\system\\%s .sys\\up_tmp > nul", v)) end
         os.execute("copy .sys\\upsys.sh .sys\\up_tmp > nul")
     end
-    print("197")
     os.execute("upfile\\script\\create_md5.bat app")
     io.write("cd /tmp/upf\n")
     io.write("put .sys/md5sum\n")
@@ -217,6 +216,8 @@ function create_upload(upf, up6, cstm, vendor, lang)
     if up6.custom == 2 then
         os.execute("upfile\\script\\create_md5.bat 61850 _app scl_srvr_n")
         io.write("put upfile/61850/_app/scl_srvr_n\n")
+        os.execute("upfile\\script\\create_md5.bat 61850 _app *.sh")
+        io.write("mput upfile/61850/_app/*.sh\n")
         os.execute(string.format("upfile\\script\\create_md5.bat 61850 %s boyuu61850/*", cstm))
         io.write(string.format("put -r upfile/61850/%s/boyuu61850\n", cstm))
         os.execute(string.format("upfile\\script\\create_md5.bat 61850 %s data_sv/*", cstm))
@@ -225,6 +226,8 @@ function create_upload(upf, up6, cstm, vendor, lang)
         if up6.server == 1 then 
             os.execute("upfile\\script\\create_md5.bat 61850 _app scl_srvr_n")
             io.write("put upfile/61850/_app/scl_srvr_n\n")
+            os.execute("upfile\\script\\create_md5.bat 61850 _app *.sh")
+            io.write("mput upfile/61850/_app/*.sh\n")
         end
         io.write("mkdir boyuu61850\n")
         io.write("cd boyuu61850\n")
@@ -263,11 +266,12 @@ function create_update(upf, up6, up_cfg)
     io.write("cd /tmp/upf\n")
     --61850
     if up6.need == 1 then
-        if up6.custom ~= 0 or up6.db ~= 0 then io.write("rm /home/boyuu/save/boyuu61850/jou/*\n") end
+        if up6.custom ~= 0 or up6.db ~= 0 then io.write("rm /home/boyuu/save/boyuu61850/jou/* -r -f\n") end
         io.write("rm /home/boyuu/save/boyuu61850/mms*\n")
         if up6.server == 1 then
             io.write("chmod +x /tmp/upf/scl_srvr_n\n")
-            io.write("chmod +x /home/boyuu/save/boyuu61850/scl_srvr_n\n")
+            io.write("chmod +x /tmp/upf/*.sh\n")
+            --io.write("chmod +x /home/boyuu/save/boyuu61850/scl_srvr_n\n")
         end
     end
     
@@ -345,15 +349,14 @@ function preprocess(eqpt, dbg)
         if bit32.extract(up_cfg.prog, frclst.svx, 1) == 1 then upfile.svx = 1 end
         if bit32.extract(up_cfg.prog, frclst.System, 1) == 1 then upfile.system = 1 upfile.sysver = 0 end
         if bit32.extract(up_cfg.prog, frclst.Vendor, 1) == 1 then upfile.vendor = 1 end
-        if bit32.extract(up_cfg.prog, frclst.Kernel, 1) == 1 then upfile.kernel = 1 end
+        if bit32.extract(up_cfg.prog, frclst.Kernel, 1) == 1 and tonumber(up_cfg.kernel) == 1 then upfile.kernel = 1 end
     end
-
     upfile.need = 0
     for k,v in pairs(upfile) do if v ~= 0 then upfile.need=1 break end end
+    print("-------upfile:-------") for k,v in pairs(upfile) do print(k,v) end
     up61850.need = 0
     for k,v in pairs(up61850) do if v ~= 0 then up61850.need=1 break end end
-    print("upfile:") for k,v in pairs(upfile) do print(k,v) end
-    -- print("up61850:") for k,v in pairs(up61850) do print(k,v) end
+    print("-------up61850:-------") for k,v in pairs(up61850) do print(k,v) end
     if upfile.need == 1 or up61850.need == 1 then
         create_upload(upfile, up61850, custm6, vendor, lang)
         create_update(upfile, up61850, up_cfg)

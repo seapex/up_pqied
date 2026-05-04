@@ -1,57 +1,79 @@
-Todo:
 
-2024-8-1
+
++-------------------------------------+
+2025-11-17
+1. 修改 preprocess.lua/create_update(), 61850升级时，如客户或数据版本变更时，应删除jou下的所有，包括子目录
++-------------------------------------+
+2025-08-18
+1. 修改 up_pqied\.sys\script\21\c_update.scr, 使 Reset 61850 LOG 命令能够删除子目录
++-------------------------------------+
+2025-06-05
+1. 修改 preprocess.lua/preprocess() 和 update.sh, 增加 pfile/61850/_app/*.sh 文件的升级.
+   preprocess>>V1.10
++-------------------------------------+
+2025-05-27
+1. 修改 preprocess.lua/preprocess(), 只有当 "Kernel update" 被使能且选中时，才可能会升级 kernel.
+   preprocess>>V1.9
++-------------------------------------+
+2025-03-04
+1. 修改 scan_upsys.cpp, sys_mngr 升级到 V1.1.0
++-------------------------------------+
+2025-01-14
+1. 增加 release\upfile\system\upsys4_23.sh
+2. 修改 scan_upsys.cpp, 增加 kUp_sys4_23 定义
++-------------------------------------+
+2024-08-01
 1. 修改 ntpclient.sh, 去掉 ntpclient 的 -l 选项，解决开关机后系统时间跳变的问题.
-2024-4-29
+2024-04-29
 1. 修改 preprocess.lua/get_lang(), 优化GUI显示语言处理策略.
    preprocess>>V1.8
-2024-4-17
+2024-04-17
 1. 修改 preprocess.lua/create_upload() get_lang(), 升级 GUI 程序时根据语言确定上传哪个gui 程序.
    preprocess>>V1.7
-2024-4-11
+2024-04-11
 1. 修改 preprocess.lua/preprocess(), 解决 无法更新启动界面的问题. 
    preprocess.lua>>V1.6
 
 +--------- V1.3.2 --------------------+
-2023-7-14
+2023-07-14
 1. 修改 preprocess.lua/create_upload(), 解决 ver61850.inf 重复上传的问题. 
    preprocess.lua>>V1.5
 2. 修改 getver.scr update.sh, 解决 61850 升级时，不能正确识别和更新版本信息的问题. 
 +--------- V1.3.1 --------------------+
-2023-7-14
+2023-07-14
 1. 修改 preprocess.lua/create_upload(), 解决 upf.sysver==nil 时出错的问题. 
    preprocess.lua>>V1.4
 +--------- V1.3.0 --------------------+
-2022-3-28
+2022-03-28
 1. 修改 preprocess.lua/get_61850custm(n), cst61850.lst 所在路径由 .sys 改为 upfile/61850
-2022-3-13
+2022-03-13
 1. 修改 main(), 增加 LOGIN 命令处理
 
 +--------- V1.2.1 --------------------+
-2021-9-16
+2021-09-16
 1. 修改 preprocess.lua>>>1.2, 解决61850 版本识别失效的问题.
 2. 修改 main(), 解决 28号命令"Format SD card" 未提前传送脚本的问题.
 
 +--------- V1.2.0 --------------------+
-2021-9-15
+2021-09-15
 1. 修改 main(), 增加28号命令"Format SD card".
 
 +--------- V1.1.1 --------------------+
-2021-8-8
+2021-08-08
 1. 修改 update.sh nandwrite 命令前增加 flash_erase 命令, 解决升级内核失败的问题.
  
 +--------- V1.1.0 --------------------+
-2021-6-6
+2021-06-06
 1. 修改main() 增加 pause 参数处理 
 
 +--------- V1.0.9 --------------------+
-2021-5-12
+2021-05-12
 1. 修正 27/b_upload.scr, 第1句错误. 
-2021-5-11
+2021-05-11
 1. 修改 scan_upsys.cpp, 系统文件增加 commu4scnet. 
 
 +--------- V1.0.8 --------------------+
-2021-5-7
+2021-05-07
 1. TYPE 增加 “PQNet1xx/2xxD Kit”. 
 2. 精简 TYPE 包含的类型.
 3. 修订 “Get debug information” 脚本BUG.

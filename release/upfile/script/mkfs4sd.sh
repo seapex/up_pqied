@@ -1,16 +1,18 @@
 #!/bin/sh
 umount /media/mmcblk0p1
 mkfs.ext3 /dev/mmcblk0p1
+sleep 3
 
-echo Reinsert the SD card...
-sleep 1
+echo mount the SD card...
+mount /dev/mmcblk0p1 /media/mmcblk0p1
 
+echo check file system...
 fstype=?
-delay=60
+delay=10
 while [ $delay -gt 0 ]; do
-  sleep 1
+  sleep 3
   fstype=`df -T /media/mmcblk0p1|awk 'NR==2 {print $2}'`
-  #echo $fstype
+  echo $fstype
   if [ $fstype = ext3 ]; then
     break
   fi

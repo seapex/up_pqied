@@ -171,10 +171,8 @@ void ScanUpfile(uint8_t *flags, int ver)
         case 7:
         case 8:
         case 9:
-            flags[kBusybox] = 1;
         case 10:
         case 11:
-            flags[kUp_wer] = 1;
         case 12:
         case 13:
         case 14:
@@ -183,15 +181,21 @@ void ScanUpfile(uint8_t *flags, int ver)
         case 17:
         case 18:
         case 19:
-            flags[kUp_sys_mngr] = 1;
         case 20:
             flags[kUp_ne_ftps_sh] = 1;
         case 21:
         case 22:
-            flags[kUp_sys4_23] = 1;
-            flags[kUpStartup] = 1;
-            flags[kCommu4SCNet] = 1;
         case 23:
+            flags[kBusybox] = 1;
+            flags[kUp_sys4_23] = 1;
+        case 24:
+            flags[kUp_sys_mngr] = 1;
+        case 25:
+            flags[kUpStartup] = 1;
+        case 26:
+            flags[kUp_wer] = 1;
+        case 27:
+            flags[kCommu4SCNet] = 1;
         default:
             break;
     }
